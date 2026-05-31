@@ -1,0 +1,24 @@
+FROM golang:1.26-bookworm AS builder
+
+ARG BRUTUS_REF=v1.5.1
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+RUN git clone --depth=1 --branch "$BRUTUS_REF" https://github.com/praetorian-inc/brutus.git /src/brutus
+WORKDIR /src/brutus
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o /out/brutus ./cmd/brutus
+RUN CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o /out/brutus.exe ./cmd/brutus
+
+FROM debian:bookworm-slim
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /out/brutus /usr/local/bin/brutus
+COPY --from=builder /out/brutus.exe /usr/local/bin/brutus.exe
+
+ENTRYPOINT ["brutus"]

@@ -1,0 +1,53 @@
+services:
+  ssh-vuln:
+    build:
+      context: ./services/ssh
+    container_name: brutus-ssh-vuln
+    ports:
+      - "127.0.0.1:2222:22"
+    networks:
+      - brutus_lab_net
+    restart: unless-stopped
+    entrypoint: ["/usr/local/bin/entrypoint-vuln.sh"]
+
+  ftp-vuln:
+    build:
+      context: ./services/ftp
+    container_name: brutus-ftp-vuln
+    ports:
+      - "127.0.0.1:2121:21"
+      - "127.0.0.1:30000-30009:30000-30009"
+    networks:
+      - brutus_lab_net
+    restart: unless-stopped
+    entrypoint: ["/usr/local/bin/entrypoint-vuln.sh"]
+
+  http-basic-vuln:
+    build:
+      context: ./services/http-basic
+      args:
+        AUTH_MODE: vuln
+    container_name: brutus-http-basic-vuln
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - brutus_lab_net
+    restart: unless-stopped
+
+  brutus-runner:
+    profiles: ["tools"]
+    build:
+      context: ./tools
+      dockerfile: Dockerfile.brutus
+    image: brutus-mini-lab-brutus:latest
+    network_mode: host
+    working_dir: /lab
+    volumes:
+      - ./:/lab
+    entrypoint: ["brutus"]
+
+networks:
+  brutus_lab_net:
+    name: brutus_lab_net
+    driver: bridge
+

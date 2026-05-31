@@ -1,0 +1,13 @@
+bin/
+results/*.log
+results/*.json
+results/*.txt
+!results/.gitkeep
+.env
+*.tmp
+*.swp
+*.bak
+.DS_Store
+Thumbs.db
+__pycache__/
+
