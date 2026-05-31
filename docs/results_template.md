@@ -52,11 +52,11 @@ Expected:
 
 - Issues encountered:
   - The current Brutus CLI uses the `creds` subcommand; the initial root-level `--protocol` call was rejected.
-  - The upstream Brutus `go.mod` required Go 1.25 or newer.
+  - The upstream Brutus `go.mod` required a newer Go toolchain than the first builder image provided.
   - The HTTP Basic Auth container initially returned HTTP 500 because Nginx could not read the generated `.htpasswd` file.
 - Fixes:
   - Updated `exploit_test.sh` to call `brutus creds --target ... --protocol ...`.
-  - Updated the Brutus builder image to `golang:1.25-bookworm`.
+  - Updated the Brutus builder image to `golang:1.26-bookworm` and pinned the Brutus source to the official `v1.5.1` tag for a repeatable build.
   - Changed HTTP Basic `.htpasswd` permission to `0644` inside the container.
   - Re-ran vulnerable and secured tests; final logs show expected results with 0 runtime errors.
 

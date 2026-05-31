@@ -12,8 +12,3 @@ Participant 1:
   - Ran vulnerable and secured validation tests and recorded final results.
 - Percentage: 100%
 
-Participant 2, if applicable:
-- Name: N/A
-- Student ID: N/A
-- Contributions: N/A
-- Percentage: N/A

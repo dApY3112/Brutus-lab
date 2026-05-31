@@ -73,7 +73,7 @@ Docker network: brutus_lab_net
 ## Quick Start
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/dApY3112/Brutus-lab.git
 cd brutus-mini-lab
 ./setup.sh
 ./run_vuln.sh
@@ -218,7 +218,7 @@ Brutus JSON output contains only successful credentials. In secured mode the JSO
 
 ## Brutus Runner Notes
 
-`setup.sh` builds Brutus from the official `v1.5.1` release tag at `https://github.com/praetorian-inc/brutus` in `tools/Dockerfile.brutus`. It then tries to extract Linux and Windows binaries to `bin/brutus` and `bin/brutus.exe`.
+`setup.sh` builds Brutus from `https://github.com/praetorian-inc/brutus` in `tools/Dockerfile.brutus`. It then tries to extract Linux and Windows binaries to `bin/brutus` and `bin/brutus.exe`.
 
 `exploit_test.sh` resolves Brutus in this order:
 
@@ -252,18 +252,6 @@ Optional script lint:
 ```bash
 shellcheck setup.sh run_vuln.sh run_secured.sh stop_lab.sh exploit_test.sh verify_lab.sh tools/run-brutus.sh
 ```
-
-## Two-Minute Demo Video
-
-Use `docs/demo_script.md` as the speaking and command plan:
-
-- 0:00-0:15 show README and scope.
-- 0:15-0:35 run `./setup.sh`.
-- 0:35-0:55 run `./run_vuln.sh`.
-- 0:55-1:20 run `./exploit_test.sh` and show 3 findings.
-- 1:20-1:40 run `./run_secured.sh`.
-- 1:40-1:55 run `./exploit_test.sh --secured` and show no findings.
-- 1:55-2:00 summarize vulnerable vs secured.
 
 ## Troubleshooting
 
